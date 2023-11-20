@@ -32,6 +32,7 @@ import com.example.project.service.ReservationService;
 import com.example.project.service.ServiceCategoryService;
 import com.example.project.service.ServiceService;
 
+import jakarta.mail.MessagingException;
 import jakarta.websocket.server.PathParam;
 
 /**
@@ -169,7 +170,16 @@ public class AdminAppointment {
       ReservationService.editReservationDoc(doctoredit, doctorService.findById(doctoredit).getDoctor_name(), id);
       return "redirect:/admin/appointment/edit/" + id;
     }
+
     ReservationService.editReservation(id, statusedit);
+    reservationDTO r = ReservationService.getReservationDTODetail(id);
+    prescription prec = PrescriptionService.getByRid(id);
+    try {
+      ReservationService.sendEmail2(r.getPatient_email(), r.getPatient_name(), r.getDoctor_name(), prec.getContent());
+    } catch (MessagingException e) {
+      
+      e.printStackTrace();
+    }
     return "redirect:/admin/appointment";
   }
 

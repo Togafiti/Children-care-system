@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="color: #007BFF;">Appointment Confirmation</h1>
+    <p>Dear <span th:text="${patientName}" style="font-weight: bold;"></span>,</p>
+
+    <p>Your appointment with Dr. <span th:text="${doctorName}" style="font-weight: bold;"></span> on  has been finished.</p>
+
+    
+
+    <p>Your prescription: <span th:text="${prec}" ></span></p>
+
+    <p>Thank you for choosing our healthcare service.</p>
+</body>
+
+</html>
