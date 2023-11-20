@@ -163,8 +163,8 @@ public class ReservationService {
         emailSender.send(message);
     }
 
-    public void sendEmail2(String patient_email, String patient_name, String doctor_name, String date,
-            List<service> services, int total_cost, String prec) throws MessagingException {
+    public void sendEmail2(String patient_email, String patient_name, String doctor_name,
+              String prec) throws MessagingException {
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -178,12 +178,12 @@ public class ReservationService {
         // Đặt các biến để truyền dữ liệu vào mẫu
         context.setVariable("patientName", patient_name);
         context.setVariable("doctorName", doctor_name);
-        context.setVariable("date", date);
-        context.setVariable("services", services);
-        context.setVariable("totalCost", total_cost);
+        
+        
+        
         context.setVariable("prec", prec);
 
-        String emailContent = templateEngine.process("appointment-confirmation", context);
+        String emailContent = templateEngine.process("appointment-confirmation2", context);
         helper.setText(emailContent, true);
         emailSender.send(message);
     }
