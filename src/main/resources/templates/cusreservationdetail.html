@@ -265,6 +265,8 @@
                                                 <input readonly class="form-control" th:case="0" value="Chờ xác nhận">
                                                 <input readonly class="form-control" th:case="1" value="Chấp Nhận">
                                                 <input readonly class="form-control" th:case="2" value="Đã Khám">
+                                                <input readonly class="form-control" th:case="3" value="Không Đến">
+                                                <input readonly class="form-control" th:case="4" value="Từ Chối">
                                             </div>
                                         </div>
 
@@ -297,6 +299,13 @@
                                         <div th:if="${reservation.status==2}" style="text-align: right;">                        
                                             <a  th:href="@{/feedback?id=}+${patient.patient_id}+'&reservationid='+${reservation.reservation_id}" class="btn btn-primary" >Feedback</a>
                                       </div>
+                                    </div>
+                                    <div th:if="${reservation.status == 0}">
+                                        <div class="mt-4 mt-sm-0">
+                                            <a href="#" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#newblogadd">Add
+                                                More Service</a>
+                                        </div>
                                     </div>
                                     <!-- <div th:if="${reservation.status==0}" style="text-align: right;">
 
@@ -393,6 +402,52 @@
                             </div>
 
                         </div>
+                        <div class="modal fade position-fixed " id="newblogadd" tabindex="1" style="z-index: 1051;"
+                    aria-labelledby="exampleModalLabel1" aria-hidden="true" >
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content" >
+                            <div class="modal-header border-bottom p-3">
+                                <h5 class="modal-title" id="exampleModalLabel">Add Service</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body p-3 pt-4" >
+
+                                <form name="addService" th:action="@{'/cusreservationdetail/' + ${reservation.reservation_id} + '/addservice'}" method="post"
+                                    >
+                                    <div class="row">
+
+                                        <div class="col-md-8 mt-4 mt-sm-0">
+                                            <div class="ms-md-4">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        
+                                                    </div><!--end col-->
+                                                    
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <select multiple class="form-control department-name select2input" name="service_id" id="ser">
+                                                                <option value="">Select service</option>
+                                                            
+                                                                <option th:each="ser : ${listService}"
+                                                                    th:text="${ser.service_name}" th:value="${ser.service_id}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <p th:text="${error}"></p>
+                                                    </div><!--end col-->
+
+                                                    <div class="col-lg-12 text-end">
+                                                        <button type="submit" class="btn btn-primary">Add
+                                                            Service</button>
+                                                    </div><!--end col-->
+                                                </div>
+                                </form>
+                            </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
+                </div>
                     </div>
                 </div>
             </div><!--end col-->

@@ -141,7 +141,7 @@
                             <div class="card border-0 p-4 rounded shadow">
                                 
                                 <form class="mt-4" th:action="@{/admin/edit-doctor/save}" method="post" enctype="multipart/form-data">
-                                    <!-- <div th:if="${successmessage}" th:text="${successmessage}" class="alert alert-danger" style="background-color: lightgreen;"></div> -->
+                                    <div th:if="${successmessage}" th:text="${successmessage}" style="color: green;"></div>
                                     <img th:src="${doctor.image}" class="rounded-circle shadow-md avatar avatar-medium" alt="">
                                     <div class="row">
                                         <div class="col-md-6">
