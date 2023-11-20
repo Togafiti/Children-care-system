@@ -122,7 +122,7 @@
                                         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Tên bác sĩ<a style="color: red;">*</a></label>
+                                                <label class="form-label">Doctor Name<a style="color: red;">*</a></label>
                                                 <input required name="docname" id="name" type="text" class="form-control" placeholder="Tên bác sĩ: " th:value="${rename}">
                                             </div>
                                             <div th:if="${namemessage}" th:text="${namemessage}" style="color: red;"></div>
@@ -131,7 +131,7 @@
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Chức vụ<a style="color: red;">*</a></label>
+                                                <label class="form-label">Position<a style="color: red;">*</a></label>
                                                 <input required name="docpos" id="name2" type="text" class="form-control" placeholder="Chức vụ: " th:value="${reposition}">
                                             </div>
                                             <div th:if="${posmessage}" th:text="${posmessage}" style="color: red;"></div>
@@ -139,7 +139,7 @@
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Sinh nhật</label>
+                                                <label class="form-label">DoB</label>
                                                 <input required name="docdob" id="email" type="Date" class="form-control" placeholder="Sinh nhật :" th:value="${redob}">
                                             </div> 
                                             <div th:if="${dobmessage}" th:text="${dobmessage}" style="color: red;"></div>
@@ -148,7 +148,7 @@
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Số điện thoại<a style="color: red;">*</a></label>
+                                                <label class="form-label">Phone num.<a style="color: red;">*</a></label>
                                                 <input required name="docphone" id="number" type="text" class="form-control" placeholder="Số điện thoại: " th:value="${rephone}">
                                             </div>          
                                             <div th:if="${phonemessage}" th:text="${phonemessage}" style="color: red;"></div>                                                                     
@@ -157,7 +157,7 @@
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Khoa<a style="color: red;">*</a></label>
+                                                <label class="form-label">Department<a style="color: red;">*</a></label>
                                                 <select class="form-control department-name select2input" name="service_id" id="ser">
                                                     <!-- <div th:if="${redepartment}">
                                                         <option th:text="${redepartment}"></option>>
@@ -169,24 +169,24 @@
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Giới tính<a style="color: red;">*</a></label>
+                                                <label class="form-label">Gender<a style="color: red;">*</a></label>
                                                 <select class="form-control gender-name select2input" name="gender" > 
-                                                    <option th:value="Male">Nam</option>
-                                                    <option th:value="Female">Nữ</option>
+                                                    <option th:value="Male">Male</option>
+                                                    <option th:value="Female">Female</option>
                                                 </select>
                                             </div>
                                         </div><!--end col-->
 
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Ảnh </label>
+                                                <label class="form-label">Image </label>
                                                 <input name="docimg" id="name2" type="file" class="form-control" th:value="${refile}">
                                             </div>
                                         </div><!--end col-->
       
                                         <div class="col-md-12">
                                             <div class="mb-3">
-                                                <label class="form-label">Mô tả</label>
+                                                <label class="form-label">Description</label>
                                                 <textarea name="docdes" id="editor1" rows="3" class="form-control" placeholder="Description :" th:text="${redes}"></textarea>
                                             </div>
                                         </div>
@@ -207,7 +207,7 @@
                                         }
                                     </script>
         
-                                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 </form>
                             </div>
                         </div><!--end col-->

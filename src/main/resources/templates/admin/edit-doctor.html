@@ -133,7 +133,7 @@
             <div class="container-fluid">
                 <div class="layout-specing">
                     <div class="d-md-flex justify-content-between">
-                        <h5 class="mb-0">Sửa thông tin bác sĩ</h5>
+                        <h5 class="mb-0">Edit Doctor</h5>
                     </div>
                     
                     <div class="row">
@@ -146,50 +146,50 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Mã số</label>
+                                                <label class="form-label">ID</label>
                                                 <input readonly name="doctor_id" id="name" type="text" class="form-control" placeholder="Doctor ID :" th:field="${doctor.doctor_id}">
                                             </div>
                                         </div><!--end col-->
 
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Tên bác sĩ</label>
+                                                <label class="form-label">Doctor Name</label>
                                                 <input name="docname" id="name" type="text" class="form-control" placeholder="Doctor Name :" th:field="${doctor.doctor_name}">
                                             </div>
                                         </div><!--end col-->
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Chức vụ</label>
+                                                <label class="form-label">Position</label>
                                                 <input name="docpos" id="name2" type="text" class="form-control" placeholder="Position :" th:field="${doctor.position}">
                                             </div>
                                         </div><!--end col-->
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Sinh nhật</label>
+                                                <label class="form-label">DoB</label>
                                                 <input name="docdob" id="email" type="text" class="form-control" placeholder="Dob :" th:field="${doctor.dob}">
                                             </div> 
                                         </div><!--end col-->
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Số điện thoại</label>
+                                                <label class="form-label">Phone num.</label>
                                                 <input name="docphone" id="number" type="text" class="form-control" placeholder="Phone no :" th:field="${doctor.phone}">
                                             </div>                                                                               
                                         </div><!--end col-->
         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Giới tính</label>
+                                                <label class="form-label">Gender</label>
                                                 <select class="form-control gender-name select2input" name="gender">
                                                     <div th:if="${doctor.gender==1}">
-                                                        <option th:value="${doctor.gender}" th:text="Nam"></option>
-                                                        <option value="Female">Nữ</option>
+                                                        <option th:value="${doctor.gender}" th:text="Male"></option>
+                                                        <option value="Female">Female</option>
                                                     </div> 
                                                     <div th:if="${doctor.gender==0}">
-                                                        <option th:value="${doctor.gender}" th:text="Nữ"></option>
-                                                        <option value="Male">Nam</option>
+                                                        <option th:value="${doctor.gender}" th:text="Female"></option>
+                                                        <option value="Male">Male</option>
                                                     </div>
                                                     
                                                 </select>
@@ -198,7 +198,7 @@
 
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Khoa</label>
+                                                <label class="form-label">Department</label>
                                                 <select class="form-control department-name select2input" name="service_id">
                                                     <option class="p-3" th:each="cateservice : ${cateservice}" th:if="${cateservice.id == doctor.doctorserviceId}" 
                                                     th:text="${cateservice.name}" th:value="${cateservice.id}"></option>
@@ -209,22 +209,22 @@
                                         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Ảnh</label>
+                                                <label class="form-label">Image</label>
                                                 <input name="docimg" id="name2" type="file" class="form-control" th:value="${doctor.image}">
                                             </div>
                                         </div><!--end col-->
 
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Trạng thái</label>
+                                                <label class="form-label">Status</label>
                                                 <select class="form-control gender-name select2input" name="docstatus">
                                                     <div th:if="${doctor.status==1}">
-                                                        <option th:value="${doctor.status}">Hoạt động</option>
-                                                        <option value="Blocked">Khóa</option>
+                                                        <option th:value="${doctor.status}">Active</option>
+                                                        <option value="Blocked">Blocked</option>
                                                     </div> 
                                                     <div th:if="${doctor.status==0}">
-                                                        <option th:value="${doctor.status}" th:text="Khóa"></option>
-                                                        <option value="Active">Hoạt động</option>
+                                                        <option th:value="${doctor.status}" th:text="Blocked"></option>
+                                                        <option value="Active">Active</option>
                                                     </div>
                                                     
                                                 </select>
@@ -234,7 +234,7 @@
       
                                         <div class="col-md-12">
                                             <div class="mb-3">
-                                                <label class="form-label">Mô tả</label>
+                                                <label class="form-label">Description</label>
                                                 <textarea name="docdes" id="editor1" rows="3" class="form-control" placeholder="Description :" th:field="${doctor.description}"></textarea>
                                             </div>
                                         </div>
@@ -255,7 +255,7 @@
                                         </script>
                                     </div><!--end row-->
         
-                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </form>
                             </div>
                         </div><!--end col-->
