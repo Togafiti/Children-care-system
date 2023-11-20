@@ -43,8 +43,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> getBlogByCategoryId(int category_id) {
-        return repo.findByCategory_blog_id(category_id);
+    public List<Blog> getBlogByCategoryId(int blogId,int category_id) {
+        return repo.findByCategory_blog_id( blogId,category_id);
     }
 
     @Override
