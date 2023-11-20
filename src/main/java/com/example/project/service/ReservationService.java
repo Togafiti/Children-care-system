@@ -344,4 +344,8 @@ public class ReservationService {
     public List<reservation> findAll(){
         return repository.findAll();
     }
+
+    public void updateTotal(int total_cost, int reservation_id) {
+        repository.updateTotal(total_cost, reservation_id);
+    }
 }

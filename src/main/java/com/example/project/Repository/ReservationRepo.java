@@ -7,12 +7,15 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.project.entity.patient;
 import com.example.project.entity.reservation;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface ReservationRepo extends JpaRepository<reservation, Integer> {
@@ -71,4 +74,9 @@ public interface ReservationRepo extends JpaRepository<reservation, Integer> {
             "GROUP BY months.month " +
             "ORDER BY months.month", nativeQuery = true)
     List<Integer> getMonthlyReservationCounts(@Param("year") int year);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE reservation SET total_cost = ?1 WHERE reservation_id = ?2", nativeQuery = true)
+    void updateTotal(int total_cost, int reservation_id);
 }

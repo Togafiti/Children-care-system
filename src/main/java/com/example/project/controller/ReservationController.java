@@ -12,12 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.project.Repository.ReservationDetailRepo;
+import com.example.project.dto.reservationDTO;
 import com.example.project.dto.slotDTO;
 import com.example.project.entity.doctor;
 import com.example.project.entity.feedbackreservation;
@@ -36,6 +38,7 @@ import com.example.project.service.ServiceService;
 
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.server.PathParam;
 
 @Controller
 public class ReservationController {
@@ -340,6 +343,7 @@ public class ReservationController {
         Page<reservation> page = ReservationService.findPaginated(u.getUser_id(), pageNo, pageSize);
         List<reservation> listB = page.getContent();
 
+        
         model.addAttribute("reservation", listB);
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -358,6 +362,7 @@ public class ReservationController {
             model.addAttribute("feedback", feedback);
         }
 
+        model.addAttribute("listService", ServiceService.fechServicesList());
         model.addAttribute("reservation", reservations);
         model.addAttribute("detail", ReservationService.findReserDetailByReserID(reservation_id));
         model.addAttribute("patient", p);
@@ -366,57 +371,38 @@ public class ReservationController {
         return "cusreservationdetail";
     }
 
-    // @GetMapping("/rebooking")
-    // public String reBooking(@RequestParam(value = "serviceId", required = false)
-    // List<Integer> service_id,
-    // @RequestParam(value = "doctorId", required = false) Integer doctorId,
-    // @RequestParam("date") String date,
-    // @RequestParam("time") String time,
-    // RedirectAttributes redirAttr, HttpSession session, Model model) {
+    @PostMapping("/cusreservationdetail/{reservation_id}/addservice")
+  public String addservice(@RequestParam(value = "service_id", required = false) List<Integer> service_id,
+  @PathVariable(name = "reservation_id") Integer reservation_id, Model model) {
+    reservationDTO reservationDTO = ReservationService.getReservationDTODetail(reservation_id);
+    doctor doctor = DoctorService.findDoctorByDoctorName(reservationDTO.getDoctor_name());    
+    List<service> services = ServiceService.findListByServiceId(service_id);
+    List<reservationdetail> reservationdetails = ReservationService.getReservationdetail(reservation_id);
+    int total = ReservationService.findReservationByID(reservation_id).getTotal_cost();
+    for (service service : services) {
+      for (reservationdetail reservationdetail : reservationdetails) {
+        if (reservationdetail.getService_id() == service.getService_id()) {
+          model.addAttribute("error", "*Dịch vụ đã tồn tại");
+          return "redirect:/cusreservationdetail/" + reservation_id;
+        }
+      }
+      java.sql.Date date1 = new java.sql.Date(reservationDTO.getDate().getTime());
+      ReservationService.mergeReservationDetail(reservation_id, service.getService_id(), service.getService_name(), service.getPrice(), date1, "admin", doctor.getDoctor_id(), doctor.getDoctor_name());;
+      total += service.getPrice();
+    }
+    ReservationService.updateTotal(total, reservation_id);
+    return "redirect:/cusreservationdetail/" + reservation_id;
+  }
 
-    // if (doctorId == null) {
-    // doctorId = 0;
-    // }
-    // reservation r = ReservationService.findByDoctor_idAndDateAndTime(doctorId,
-    // java.sql.Date.valueOf(date), time);
-    // if (r != null) {
-    // redirAttr.addFlashAttribute("messageReser", "This time slot is not
-    // available");
-    // return "redirect:/cusreservationdetail";
-    // } else {
-    // if (service_id != null) {
-    // Optional<doctor> optionalDoctor = DoctorService.findDoctorById(doctorId);
-    // doctor doctor = optionalDoctor.get();
-    // double totalPrice = 0.0;
-    // List<service> services = ServiceService.findListByServiceId(service_id);
-    // for (service service : services) {
-    // // Cập nhật tổng số tiền bằng cách thêm giá của mỗi dịch vụ
-    // totalPrice += service.getPrice();
-    // }
-    // model.addAttribute("doctor", doctor);
-    // model.addAttribute("service",
-    // ServiceService.findListByServiceId(service_id));
-    // model.addAttribute("date", date);
-    // model.addAttribute("time", time);
-    // model.addAttribute("totalPrice", totalPrice);
-    // session.setAttribute("selectedDate", date);
-    // session.setAttribute("selectedServices",
-    // ServiceService.findListByServiceId(service_id));
-    // session.setAttribute("selectedDoctors", doctor);
-    // session.setAttribute("selectedTime", time);
-    // } else {
-    // model.addAttribute("doctor", null);
-    // model.addAttribute("date", date);
-    // model.addAttribute("time", time);
-    // session.setAttribute("selectedDate", date);
-    // session.setAttribute("selectedTime", time);
-    // session.setAttribute("selectedServices", null);
-    // session.setAttribute("selectedDoctors", null);
-    // }
-    // }
-
-    // return "cusreservationdetail";
-    // }
+  @GetMapping("/cusreservationdetail/{reservation_id}/delete/{serviceid}")
+  public String delete(@PathVariable int reservation_id,@PathVariable int serviceid, Model model) {
+    int total = ReservationService.findReservationByID(reservation_id).getTotal_cost();
+    int serprice = ServiceService.findServiceById(serviceid).get().getPrice();
+    ReservationService.DeleteService(reservation_id, serviceid);
+    total = total - serprice;
+    ReservationService.updateTotal(total, reservation_id);
+    return "redirect:/cusreservationdetail/" + reservation_id;
+  }
 
     @RequestMapping("/cusreservationdetail/{reservation_id}/delete")
     public String deleteReser(@PathVariable(value = "reservation_id") int reservation_id, Model model) {
