@@ -12,6 +12,8 @@ import com.example.project.Repository.FeedbackRepo;
 import com.example.project.entity.feedbackreservation;
 import com.example.project.entity.patient;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class FeedbackService {
     @Autowired
@@ -20,6 +22,8 @@ public class FeedbackService {
     public List<feedbackreservation> fechFeedbackList() {
         return repo.findAll();
     }
+
+    
 
     public List<Object[]> getAll() {
         return repo.getAll();
@@ -74,5 +78,10 @@ public class FeedbackService {
         } else {
             return null;
         }
+    }
+    
+    @Transactional
+    public void dele(int id){
+        repo.dele(id);
     }
 }

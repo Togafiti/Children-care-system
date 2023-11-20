@@ -153,6 +153,12 @@
                                         <p th:text="'Total cost: '+${#numbers.formatDecimal(d[7], 0, 'COMMA', 0, 'POINT') + 'đ'}"></p>
                                         
                                     </div>
+                                    <div style="margin-left: 500px;">
+                                        <form th:action="@{/admin/feedback/delete}" method="post">
+                                            <input type="text" name="fbid" hidden th:value="${d[0]}">
+                                            <input type="submit" value="Delete">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

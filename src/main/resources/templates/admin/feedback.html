@@ -73,7 +73,7 @@
 
 
                         <li class="list-inline-item mb-0 ms-1">
-                           <div class="dropdown dropdown-primary">
+                            <div class="dropdown dropdown-primary">
                                 <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                         th:src="@{${session.user.image}}" class="avatar avatar-ex-small rounded-circle"
@@ -127,34 +127,7 @@
                             
                         </div>
 
-                        <!-- <form th:action="@{/admin/patients}" method="post">
-                            <button type="submit" class="btn btn-soft-success m-1 btn-sm" value="default"
-                                name="order">Default</button>
-                            <button class="btn btn-soft-success m-1 btn-sm" value="gender" name="order"
-                                th:hidden="${genderActive == -1}">Gender</button>
-                            <button class="btn btn-soft-warning m-1 btn-sm" value="female" name="order"
-                                th:hidden="${genderActive != -1}">Female</button>
-                            <button class="btn btn-soft-warning m-1 btn-sm" value="male" name="order"
-                                th:hidden="${genderActive != -1}">Male</button>
-                            <button class="btn btn-soft-success m-1 btn-sm" value="status" name="order"
-                                th:hidden="${statusActive == -1}">Status</button>
-                            <button class="btn btn-soft-warning m-1 btn-sm" value="1" name="order"
-                                th:hidden="${statusActive != -1}">Reservation ended</button>
-                            <button class="btn btn-soft-warning m-1 btn-sm" value="0" name="order"
-                                th:hidden="${statusActive != -1}">In process</button>
-                        </form> -->
-                        <!-- <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
-                            <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                                <li class="breadcrumb-item"><a href="dashboard">Doctris</a></li>
-                                <li class="breadcrumb-item" aria-current="page"><i
-                                        class="fa-solid fa-caret-down fa-rotate-270"></i></li>
-                                <li class="breadcrumb-item active" aria-current="page">Patients</li>
-                            </ul>
-                            <form th:action="@{/admin/add-patient}">
-                                <input type="submit" value="Add Patient"
-                                    class="btn btn-soft-primary m-1 btn-sm"></input>
-                            </form>
-                        </nav> -->
+                        
                     </div>
 
                     <div class="row">
@@ -217,9 +190,11 @@
                                                 <a th:href="@{/admin/feedback-detail/{id}(id=${fb[0]})}"
                                                     class="btn btn-icon btn-pills btn-soft-primary"><i
                                                         class="uil uil-eye"></i></a>
-                                                
+                                                        
+                                               
                                                 
                                             </td>
+                                            
 
                                         </tr>
                                     </tbody>
@@ -259,8 +234,8 @@
                                             th:unless="${currentPage < totalPages}">Next</span>
                                     </li>
                                 </ul> -->
-
-                                <ul 
+                                <div th:if="${listAll!=null}">
+                                    <ul 
                                     class="pagination justify-content-end mb-0 list-unstyled">
                                     <li class="page-item">
                                         <a th:if="${currentPage >1}"
@@ -283,7 +258,11 @@
                                         <span class="page-link pe-none"
                                             th:unless="${currentPage < totalPages}">Next</span>
                                     </li>
-                                </ul><!--end pagination-->
+                                </ul>
+
+                                </div>
+                                
+
                                 
                                 <!-- <ul th:if="${sortField==null&&status==null&&catId==null&&searchText!=null&&totalPages>1}"
                                     class="pagination justify-content-end mb-0 list-unstyled">

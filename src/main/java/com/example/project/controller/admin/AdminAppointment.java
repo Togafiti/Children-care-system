@@ -174,12 +174,22 @@ public class AdminAppointment {
     ReservationService.editReservation(id, statusedit);
     reservationDTO r = ReservationService.getReservationDTODetail(id);
     prescription prec = PrescriptionService.getByRid(id);
-    try {
-      ReservationService.sendEmail2(r.getPatient_email(), r.getPatient_name(), r.getDoctor_name(), prec.getContent());
-    } catch (MessagingException e) {
-      
-      e.printStackTrace();
+    if (prec != null) {
+      try {
+        ReservationService.sendEmail2(r.getPatient_email(), r.getPatient_name(), r.getDoctor_name(), prec.getContent());
+      } catch (MessagingException e) {
+
+        e.printStackTrace();
+      }
+    } else {
+      try {
+        ReservationService.sendEmail2(r.getPatient_email(), r.getPatient_name(), r.getDoctor_name(), "");
+      } catch (MessagingException e) {
+
+        e.printStackTrace();
+      }
     }
+    
     return "redirect:/admin/appointment";
   }
 

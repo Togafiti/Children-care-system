@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.project.Admin.ServiceCategoryController.Service.ServiceCategoryService;
 import com.example.project.Admin.ServiceController.Model.Service;
+import com.example.project.entity.feedbackreservation;
 import com.example.project.service.FeedbackService;
 
 @Controller
@@ -80,6 +82,14 @@ public class AdminFeedback {
         model.addAttribute("totalPages", page.getTotalPages());
         //model.addAttribute("totalService", page.getTotalElements());
         return "admin/feedback";
+    }
+
+    @PostMapping(value = "/admin/feedback/delete")
+    public String dele(Model model,@RequestParam("fbid") String id){
+        int fbid = Integer.parseInt(id);
+        FeedbackService.dele(fbid);
+
+        return "redirect:/admin/feedback";
     }
 
     

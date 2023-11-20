@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -90,4 +91,8 @@ public interface FeedbackRepo extends JpaRepository<feedbackreservation, Integer
         
         @Query("SELECT u FROM feedbackreservation u where reservation_id=?1")
         Optional<feedbackreservation> findByReserId(int id);
+
+        @Modifying 
+        @Query("DELETE FROM feedbackreservation WHERE id = ?1")
+        void dele(int id);
 }
