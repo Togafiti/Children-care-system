@@ -18,13 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.project.Repository.PrescriptionRepo;
 import com.example.project.Repository.ReservationRepo;
 import com.example.project.dto.reservationDTO;
 import com.example.project.entity.doctor;
+import com.example.project.entity.prescription;
 import com.example.project.entity.reservation;
 import com.example.project.entity.reservationdetail;
 import com.example.project.entity.service;
 import com.example.project.service.DoctorService;
+import com.example.project.service.PrescriptionService;
 import com.example.project.service.ReservationService;
 import com.example.project.service.ServiceCategoryService;
 import com.example.project.service.ServiceService;
@@ -36,6 +39,10 @@ import jakarta.websocket.server.PathParam;
  */
 @Controller
 public class AdminAppointment {
+
+  @Autowired
+  PrescriptionService PrescriptionService;
+
 
   @Autowired
   ReservationService ReservationService;
@@ -77,6 +84,36 @@ public class AdminAppointment {
     model.addAttribute("reservationDTO", reservationDTO);
     return "admin/edit-appointment";
   }
+
+  @GetMapping("/admin/prescription/{id}")
+  public String prescription(@PathVariable int id, Model model) {
+    reservationDTO reservationDTO = ReservationService.getReservationDTODetail(id);
+    prescription prec = PrescriptionService.getByRid(id);
+    if(prec==null){
+      prescription p = new prescription();
+      p.setReservation_id(id);
+      PrescriptionService.Add1(p);
+      
+      model.addAttribute("prec", p);
+      model.addAttribute("reser", reservationDTO);
+    }else{
+      model.addAttribute("prec", prec);
+      model.addAttribute("reser", reservationDTO);
+    }
+    
+    return "admin/prescription";
+  }
+
+  @PostMapping(value = "/admin/prescription/save")
+  public String savePrescription(@RequestParam("rid") String id,@RequestParam("content") String content, Model model) {
+    int rid = Integer.parseInt(id);
+    prescription prec = PrescriptionService.getByRid(rid);
+    prec.setContent(content);
+    PrescriptionService.update(prec);
+    return "redirect:/admin/appointment/edit/" + rid;
+  }
+
+
   @GetMapping("/admin/appointment/delete/{reid}/{serviceid}")
   public String delete(@PathVariable int reid,@PathVariable int serviceid, Model model) {
     ReservationService.DeleteService(reid, serviceid);

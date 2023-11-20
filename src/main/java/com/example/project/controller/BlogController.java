@@ -91,8 +91,9 @@ public class BlogController {
     public String viewBlogDetail(@PathVariable int id, Model model, HttpSession session) {
         Optional<Blog> b = BlogService.findBlogById(id);
         int cate_id = b.get().getCategoryBlogId();
-        List<Blog> list = BlogService.getBlogByCategoryId(cate_id);
-        session.setAttribute("blogId", id);
+        List<Blog> list = BlogService.getBlogByCategoryId(id,cate_id);
+        
+        model.addAttribute("blogIdd", id);
         model.addAttribute("tags", BlogService.getTags(id));
         model.addAttribute("cmt", BlogService.getComment(id));
         model.addAttribute("listBlog", list);

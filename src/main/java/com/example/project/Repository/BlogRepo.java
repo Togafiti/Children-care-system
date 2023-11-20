@@ -15,8 +15,8 @@ import com.example.project.Admin.BlogController.Model.Blog;
 @Repository
 public interface BlogRepo extends JpaRepository<Blog, Integer>{
     
-    @Query(value = "SELECT * FROM blog b WHERE b.category_blog_id = ?1",nativeQuery = true)
-    List<Blog> findByCategory_blog_id(int category_blog_id);
+    @Query(value = "SELECT * FROM blog b WHERE b.blog_id <> ?1 and b.category_blog_id = ?2",nativeQuery = true)
+    List<Blog> findByCategory_blog_id(int blogId,int category_blog_id);
     
     @Query( value ="select * from blog b  order by b.date desc limit 3",nativeQuery = true)
     List<Blog> getBlogNew();
