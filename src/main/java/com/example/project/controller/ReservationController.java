@@ -372,12 +372,13 @@ public class ReservationController {
     }
 
     @PostMapping("/cusreservationdetail/{reservation_id}/addservice")
-  public String addservice(@RequestParam(value = "serviceId", required = false) List<Integer> service_id,
-      @PathVariable(value = "reservation_id") int reservation_id, Model model) {
+  public String addservice(@RequestParam(value = "service_id", required = false) List<Integer> service_id,
+  @PathVariable(name = "reservation_id") Integer reservation_id, Model model) {
     reservationDTO reservationDTO = ReservationService.getReservationDTODetail(reservation_id);
     doctor doctor = DoctorService.findDoctorByDoctorName(reservationDTO.getDoctor_name());    
     List<service> services = ServiceService.findListByServiceId(service_id);
     List<reservationdetail> reservationdetails = ReservationService.getReservationdetail(reservation_id);
+    int total = ReservationService.findReservationByID(reservation_id).getTotal_cost();
     for (service service : services) {
       for (reservationdetail reservationdetail : reservationdetails) {
         if (reservationdetail.getService_id() == service.getService_id()) {
@@ -387,7 +388,19 @@ public class ReservationController {
       }
       java.sql.Date date1 = new java.sql.Date(reservationDTO.getDate().getTime());
       ReservationService.mergeReservationDetail(reservation_id, service.getService_id(), service.getService_name(), service.getPrice(), date1, "admin", doctor.getDoctor_id(), doctor.getDoctor_name());;
+      total += service.getPrice();
     }
+    ReservationService.updateTotal(total, reservation_id);
+    return "redirect:/cusreservationdetail/" + reservation_id;
+  }
+
+  @GetMapping("/cusreservationdetail/{reservation_id}/delete/{serviceid}")
+  public String delete(@PathVariable int reservation_id,@PathVariable int serviceid, Model model) {
+    int total = ReservationService.findReservationByID(reservation_id).getTotal_cost();
+    int serprice = ServiceService.findServiceById(serviceid).get().getPrice();
+    ReservationService.DeleteService(reservation_id, serviceid);
+    total = total - serprice;
+    ReservationService.updateTotal(total, reservation_id);
     return "redirect:/cusreservationdetail/" + reservation_id;
   }
 

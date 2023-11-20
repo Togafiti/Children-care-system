@@ -273,27 +273,44 @@
                                     </div>
 
                                     <h5>Services</h5>
-                                    <div class="row" th:each="detail : ${detail}">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Service Name</label>
-                                                <div name="sername" id="name" type="text" class="form-control"
-                                                    th:text="${detail.service_name}">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    
+                                    <div class="table-responsive shadow rounded mt-4">
+                                        <table class="table table-center invoice-tb mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="text-start border-bottom p-3"
+                                                        style="min-width: 60px;">No.</th>
+                                                    <th scope="col" class="text-start border-bottom p-3"
+                                                        style="min-width: 220px;">Dịch vụ</th>
 
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Price</label>
-                                                <div name="serprice" id="name" type="text" class="form-control"
+                                                    <th scope="col" class="border-bottom p-3"
+                                                        style="min-width: 100px;">Giá</th>
+                                                    <th scope="col" class="border-bottom p-3"
+                                                        style="min-width: 100px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="detail,itemStat :${detail}">
+                                                    <th scope="row" class="text-start p-3"
+                                                        th:text="${itemStat.count}">1</th>
+                                                    <td class="text-start p-3" name="sername" id="name" type="text"
+                                                    th:text="${detail.service_name}">
+                                                        </td>
+
+                                                    <td class="p-3"
+                                                    name="serprice" id="name" type="text"
                                                     th:text="${#numbers.formatDecimal(detail.price, 0, 'COMMA', 0, 'POINT') + 'đ'}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        <hr>
+                                                        </td>
+                                                    <td class=" p-3">
+                                                        <a th:href="@{'/cusreservationdetail/' + ${reservation.reservation_id} + '/delete/'+${detail.service_id}}"
+                                                            href="">Delete</a>
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+
                                     </div>
                                     <div th:if="!${feedback}">
                                         <div th:if="${reservation.status==2}" style="text-align: right;">                        
