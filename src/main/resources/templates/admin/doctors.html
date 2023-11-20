@@ -106,7 +106,7 @@
                     <div class="d-md-flex justify-content-between">
                         <h5 class="mb-0">Doctor List</h5>
                         <div class="col-xl-3 col-md-6 mt-4 mt-md-0 text-md-end">
-                            <a href="/admin/add-doctor" class="btn btn-primary">Thêm bác sĩ</a>
+                            <a href="/admin/add-doctor" class="btn btn-primary">Add Doctor</a>
                         </div>
 
                     </div>
@@ -117,14 +117,14 @@
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false" th:if="${cat.id==catId&&catId!=null}"
                                     th:each="cat : ${serviceCategory}" th:value="${cat.id}" th:text="${cat.name}">
-                                    Khoa
+                                    Department
                                 </button>
                                 <button type="button" class="btn btn-primary dropdown-toggle"
                                     data-bs-toggle="dropdown" aria-expanded="false" th:if="${catId==null}">
-                                    Khoa
+                                    Department
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" th:href="@{/admin/doctors}">--Tất cả khoa--</a>
+                                    <li><a class="dropdown-item" th:href="@{/admin/doctors}">--All Department--</a>
                                     </li>
                                     <li><a th:each="cat : ${serviceCategory}" th:value="${cat.id}" th:text="${cat.name}"
                                             class="dropdown-item"
@@ -134,23 +134,23 @@
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false" th:if="${status==1}" th:text="Active">
-                                    Trạng thái
+                                    Status
                                 </button>
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false" th:if="${status==0}" th:text="Blocked">
-                                    Trạng thái
+                                    Status
                                 </button>
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false" th:if="${status==null}">
-                                    Trạng thái
+                                    Status
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" th:href="@{/admin/doctors}">--Tất cả trạng thái--</a>
+                                    <li><a class="dropdown-item" th:href="@{/admin/doctors}">--All Status--</a>
                                     </li>
                                     <li><a class="dropdown-item"
-                                            th:href="@{'/admin/doctors/filterStatus/'+'1'}">Hoạt động</a></li>
+                                            th:href="@{'/admin/doctors/filterStatus/'+'1'}">Active</a></li>
                                     <li><a class="dropdown-item"
-                                            th:href="@{'/admin/doctors/filterStatus/'+'0'}">Khóa</a></li>
+                                            th:href="@{'/admin/doctors/filterStatus/'+'0'}">Blocked</a></li>
                             </div>
                             
                         </div>
@@ -173,15 +173,15 @@
                                 <table class="table table-center bg-white mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="border-bottom p-3" style="min-width: 50px;">Mã</th>
-                                            <th class="border-bottom p-3" style="min-width: 180px;">Tên</th>
-                                            <th class="border-bottom p-3">Chức vụ</th>
-                                            <th class="border-bottom p-3">Giới tính</th>
-                                            <th class="border-bottom p-3">Số điện thoại</th>
-                                            <th class="border-bottom p-3">Ảnh</th>
-                                            <th class="border-bottom p-3">Khoa</th>
-                                            <th class="border-bottom p-3" style="min-width: 150px;">Sinh nhật</th>
-                                            <th class="border-bottom p-3">Trạng thái</th>
+                                            <th class="border-bottom p-3" style="min-width: 50px;">ID</th>
+                                            <th class="border-bottom p-3" style="min-width: 180px;">Name</th>
+                                            <th class="border-bottom p-3">Position</th>
+                                            <th class="border-bottom p-3">Gender</th>
+                                            <th class="border-bottom p-3">Phone num.</th>
+                                            <th class="border-bottom p-3">Image</th>
+                                            <th class="border-bottom p-3">Department</th>
+                                            <th class="border-bottom p-3" style="min-width: 150px;">DoB</th>
+                                            <th class="border-bottom p-3">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -197,8 +197,8 @@
                                             </td>
                                             <td class="p-3" th:text="${doctor.position}"></td>
                                             <td th:switch="${doctor.gender}">
-                                                <span th:case="1">Nam</span>
-                                                <span th:case="0"><span>Nữ</span></span>
+                                                <span th:case="1">Male</span>
+                                                <span th:case="0"><span>Female</span></span>
                                             </td>
                                             <td class="p-3" th:text="${doctor.phone}"></td>
                                             <td class="p-3">
@@ -209,8 +209,8 @@
                                             </td>
                                             <td class="p-3" th:text="${doctor.dob}"></td>                                            
                                             <td th:switch="${doctor.status}">
-                                                <p th:case="1">Hoạt dộng</p>
-                                                <p th:case="0">Khóa</p>
+                                                <p th:case="1">Active</p>
+                                                <p th:case="0">Blocked</p>
                                             </td>
                                             <td class="text-end p-3">
                                                 <a th:href="@{'/admin/doctors/profile/' + ${doctor.doctor_id}}"
@@ -237,8 +237,8 @@
                                 <li class="page-item">
                                     <a th:if="${currentPage >1}"
                                         th:href="@{'/admin/doctors/page/' + ${currentPage - 1}}" class="page-link"
-                                        href="" aria-label="Prev">Trước</a>
-                                    <span class="page-link pe-none" th:unless="${currentPage >1}">Trước</span>
+                                        href="" aria-label="Prev">Prev</a>
+                                    <span class="page-link pe-none" th:unless="${currentPage >1}">Prev</span>
                                 </li>
                                 <span th:each="i:${#numbers.sequence(1,totalPages)}">
                                     <li class="page-item"><a th:if="${currentPage != i}"
@@ -251,8 +251,8 @@
                                 <li class="page-item">
                                     <a th:if="${currentPage < totalPages}"
                                         th:href="@{'/admin/doctors/page/' + ${currentPage + 1}}" class="page-link"
-                                        href="" aria-label="Next">Sau</a>
-                                    <span class="page-link pe-none" th:unless="${currentPage < totalPages}">Sau</span>
+                                        href="" aria-label="Next">Next</a>
+                                    <span class="page-link pe-none" th:unless="${currentPage < totalPages}">Next</span>
                                 </li>
                             </ul><!--end pagination-->
                         </div><!--end col-->
@@ -263,8 +263,8 @@
                                 <li class="page-item">
                                     <a th:if="${currentPage >1}"
                                         th:href="@{'/admin/doctors/filterCategory/'+${catId}+'/' + ${currentPage - 1}}"
-                                        class="page-link" href="" aria-label="Prev">Trước</a>
-                                    <span class="page-link pe-none" th:unless="${currentPage >1}">Trước</span>
+                                        class="page-link" href="" aria-label="Prev">Prev</a>
+                                    <span class="page-link pe-none" th:unless="${currentPage >1}">Prev</span>
                                 </li>
                                 <span th:each="i:${#numbers.sequence(1,totalPages)}">
                                     <li class="page-item"><a th:if="${currentPage != i}"
@@ -277,8 +277,8 @@
                                 <li class="page-item">
                                     <a th:if="${currentPage < totalPages}"
                                         th:href="@{'/admin/doctors/filterCategory/'+${catId}+'/' + ${currentPage + 1}}"
-                                        class="page-link" href="" aria-label="Next">Sau</a>
-                                    <span class="page-link pe-none" th:unless="${currentPage < totalPages}">Sau</span>
+                                        class="page-link" href="" aria-label="Next">Next</a>
+                                    <span class="page-link pe-none" th:unless="${currentPage < totalPages}">Next</span>
                                 </li>
                             </ul><!--end pagination-->
                         </div><!--end col-->
@@ -289,8 +289,8 @@
                                 <li class="page-item">
                                     <a th:if="${currentPage >1}"
                                         th:href="@{'/admin/doctors/page/' + ${currentPage - 1} +'/'+ ${keyword}}"
-                                        class="page-link" href="" aria-label="Prev">Trước</a>
-                                    <span class="page-link pe-none" th:unless="${currentPage >1}">Trước</span>
+                                        class="page-link" href="" aria-label="Prev">Prev</a>
+                                    <span class="page-link pe-none" th:unless="${currentPage >1}">Prev</span>
                                 </li>
                                 <span th:each="i:${#numbers.sequence(1,totalPages)}">
                                     <li class="page-item"><a th:if="${currentPage != i}"
@@ -303,8 +303,8 @@
                                 <li class="page-item">
                                     <a th:if="${currentPage < totalPages}"
                                         th:href="@{'/admin/doctors/page/' + ${currentPage + 1}+'/'+ ${keyword}}"
-                                        class="page-link" href="" aria-label="Next">Sau</a>
-                                    <span class="page-link pe-none" th:unless="${currentPage < totalPages}">Sau</span>
+                                        class="page-link" href="" aria-label="Next">Next</a>
+                                    <span class="page-link pe-none" th:unless="${currentPage < totalPages}">Next</span>
                                 </li>
                             </ul><!--end pagination-->
                         </div><!--end col-->
